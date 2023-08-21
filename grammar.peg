@@ -27,7 +27,7 @@ LessThan <- left:(Param) _ "<" _ right:(Values / Param) { return parseLessThan(l
 LessThanEqual <- left:(Param) _ "<=" _ right:(Values / Param) { return parseLessThanEqual(left, right) }
 GreaterThan <- left:(Param) _ ">" _ right:(Values / Param) { return parseGreaterThan(left, right) }
 GreaterThanEqual <- left:(Param) _ ">=" _ right:(Values / Param) { return parseGreaterThanEqual(left, right) }
-
+Between <- left:(Param) _ "between" _ start:(Values / Param) _ "and" _ end:(Values / Param) {return parseBetween(left, start, end)} 
 // Strings
 StringOps <- (StartsWith / EndsWith)
 StartsWith <- left:(Param) _ "starts_with" _ right:(String / Param) { return parseStartsWith(left, right) }
