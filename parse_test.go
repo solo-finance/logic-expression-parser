@@ -2,10 +2,11 @@ package lep
 
 import (
 	"errors"
-	"github.com/stretchr/testify/assert"
 	"regexp"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestParseExpression(t *testing.T) {
@@ -52,6 +53,10 @@ func TestParseExpression(t *testing.T) {
 					NotEquals(c, String("bar")),
 				),
 			),
+		},
+		{
+			query: `a between 10 and 20`,
+			expr:  BetweenXandY(a, Integer(10), Integer(20)),
 		},
 		{
 			query: `(a starts_with "foo" || a ends_with "bar") && (b starts_with a || b ends_with c)`,

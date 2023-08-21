@@ -1,6 +1,7 @@
 package lep
 
 import (
+	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -25,6 +26,7 @@ func TestParseBetween(t *testing.T) {
 
 	for _, tt := range tests {
 		e, err := parseBetween(tt.left, tt.start, tt.end)
+		log.Println(e)
 		if tt.err == nil && assert.NoError(t, err) {
 			assert.IsType(t, (*Between)(nil), e)
 			assert.Equal(t, tt.left, e.Param)
