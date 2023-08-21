@@ -9,7 +9,7 @@ This library provide generic boolean expression parser to go structures.
 
 ## Installation
 
-    $ go get -u github.com/mgudov/logic-expression-parser
+    $ go get -u github.com/solo-finance/logic-expression-parser
 
 (optional) Run unit tests
 
