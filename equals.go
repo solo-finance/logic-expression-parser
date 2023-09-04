@@ -69,3 +69,73 @@ func parseNotEquals(left, right interface{}) (*NotEqualsX, error) {
 	}
 	return NotEquals(param, value), nil
 }
+
+type LikeX struct {
+	statement
+}
+
+var _ Expression = (*LikeX)(nil)
+var _ Statement = (*LikeX)(nil)
+
+func Like(param *ParamX, value Value) *LikeX {
+	return &LikeX{
+		statement: statement{
+			Param: param,
+			Value: value,
+		},
+	}
+}
+
+func (e LikeX) Equals(other Expression) bool {
+	if expr, ok := other.(*LikeX); ok {
+		return e.Param.Equals(expr.Param) && e.Value.Equals(expr.Value)
+	}
+	return false
+}
+
+func (e LikeX) String() string {
+	return e.Param.String() + " like " + e.Value.String()
+}
+
+func parseLike(left, right interface{}) (*LikeX, error) {
+	param, value, err := parseStatement(left, right)
+	if err != nil {
+		return nil, err
+	}
+	return Like(param, value), nil
+}
+
+type NotLikeX struct {
+	statement
+}
+
+var _ Expression = (*NotLikeX)(nil)
+var _ Statement = (*NotLikeX)(nil)
+
+func NotLike(param *ParamX, value Value) *NotLikeX {
+	return &NotLikeX{
+		statement: statement{
+			Param: param,
+			Value: value,
+		},
+	}
+}
+
+func (e NotLikeX) Equals(other Expression) bool {
+	if expr, ok := other.(*NotLikeX); ok {
+		return e.Param.Equals(expr.Param) && e.Value.Equals(expr.Value)
+	}
+	return false
+}
+
+func (e NotLikeX) String() string {
+	return e.Param.String() + " not_like " + e.Value.String()
+}
+
+func parseNotLike(left, right interface{}) (*NotLikeX, error) {
+	param, value, err := parseStatement(left, right)
+	if err != nil {
+		return nil, err
+	}
+	return NotLike(param, value), nil
+}

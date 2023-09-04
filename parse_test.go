@@ -2,6 +2,7 @@ package lep
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"testing"
 	"time"
@@ -55,8 +56,8 @@ func TestParseExpression(t *testing.T) {
 			),
 		},
 		{
-			query: `a between 10 and 20`,
-			expr:  BetweenXandY(a, Integer(10), Integer(20)),
+			query: `a between t:"2021-05-01" and dt:"2021-05-02"`,
+			expr:  BetweenXandY(a, DateTime(time.Date(2021, 5, 1, 0, 0, 0, 0, time.UTC), "2006-01-02"), DateTime(time.Date(2021, 5, 2, 0, 0, 0, 0, time.UTC), "2006-01-02")),
 		},
 		{
 			query: `(a starts_with "foo" || a ends_with "bar") && (b starts_with a || b ends_with c)`,
@@ -143,6 +144,7 @@ func TestParseExpression(t *testing.T) {
 
 	for _, tt := range tests {
 		expr, err := ParseExpression(tt.query)
+		fmt.Println(expr)
 		if tt.err == nil && assert.NoError(t, err) {
 			assert.Equal(t, tt.expr, expr)
 		} else {

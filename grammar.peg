@@ -20,7 +20,9 @@ String <- '"' [^"]* '"' { return parseString(c.text) }
 DateTime <- "dt:" val:(String) { return parseDateTime(val) }
 
 // Comparators
-Comparators <- (NotEqual / Equal / GreaterThanEqual / GreaterThan / LessThanEqual / LessThan / Between)
+Comparators <- (Like / NotLike / NotEqual / Equal / GreaterThanEqual / GreaterThan / LessThanEqual / LessThan / Between)
+Like <- left:(Param) _ "like" _ right:(String / Param) { return parseLike(left, right) }
+NotLike <- left:(Param) _ "not_like" _ right:(String / Param) { return parseNotLike(left, right) }
 Equal <- left:(Param) _ "=" _ right:(Values / Param) { return parseEquals(left, right) }
 NotEqual <- left:(Param) _ "!=" _ right:(Values / Param) { return parseNotEquals(left, right) }
 LessThan <- left:(Param) _ "<" _ right:(Values / Param) { return parseLessThan(left, right) }
